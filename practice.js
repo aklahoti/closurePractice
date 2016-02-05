@@ -9,11 +9,11 @@ var outer = function(){
 //Above you're given a function that returns another function which has a closure over the name variable.
 //Invoke outer saving the return value into another variable called 'inner'.
 
-  //Code Here
+var inner = outer();
 
 //Once you do that, invoke inner.
 
-  //Code Here
+inner();
 
 
 
@@ -32,7 +32,8 @@ var callFriend = function(){
 //Above you're given a callFriend function that returns another function.
 //Do what you need to do in order to call your function and get 'Calling Jake at 435-215-9248' in your console.
 
-  //Code Here
+  var callJake = callFriend();
+  callJake('435-215-9248');
 
 
 
@@ -44,7 +45,13 @@ var callFriend = function(){
   Write a function called makeCounter that makes the following code work properly.
 */
 
-  //Code Here
+  var makeCounter = function() {
+    var counter = 0;
+    function countNum() {
+      return counter += 1;
+    }
+    return countNum;
+  }
   var count = makeCounter();
   count() // 1
   count() // 2
@@ -64,6 +71,40 @@ var callFriend = function(){
   After the function has been called N number of times, console.log('STAHHP');
 */
 
+var oneExc = function(cb) {
+  var result;
+  if (cb) {
+    result = cb.apply(this, arguments);
+    cb = null;
+  }
+  return result;
+};
 
+var onlyOnce = oneExc(function(){
+  console.log('This is the only execution');
+})
 
+//second function
+
+var oneExc = function(cb, n) {
+  var result;
+  var counter = 0;
+  return function() {
+    if (counter < n) {
+     result = cb();
+     ++counter;
+  }
+    else {
+        //cb = null;
+        return console.log('STAHHP');
+    }
+    return result;
+  
+  }
+};
+
+var x = 7;
+var onlyOnce = oneExc(function() {
+  console.log('This is one of a few executions');
+}, x)
 
